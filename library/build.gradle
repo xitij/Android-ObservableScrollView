@@ -36,11 +36,6 @@ dependencies {
     }
 }
 
-task javadoc(type: Javadoc) {
-    failOnError  false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
 
 // When testing on Travis CI,
 // connectedCheck task doesn't output logs for more than 10 minutes often,
@@ -55,6 +50,7 @@ afterEvaluate { project ->
 }
 
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'com.github.dcendents.android-maven'
 
 coveralls.jacocoReportPath = 'build/reports/coverage/debug/report.xml'
 

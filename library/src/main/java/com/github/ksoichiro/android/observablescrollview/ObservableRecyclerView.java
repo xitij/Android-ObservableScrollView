@@ -325,16 +325,6 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
     }
 
     /**
-     * <p>Same as {@linkplain #scrollToPosition(int)} but it scrolls to the position not only make
-     * the position visible.</p>
-     * <p>It depends on {@code LayoutManager} how {@linkplain #scrollToPosition(int)} works,
-     * and currently we know that {@linkplain LinearLayoutManager#scrollToPosition(int)} just
-     * make the position visible.</p>
-     * <p>In LinearLayoutManager, scrollToPositionWithOffset() is provided for scrolling to the position.
-     * This method checks which LayoutManager is set,
-     * and handles which method should be called for scrolling.</p>
-     * <p>Other know classes (StaggeredGridLayoutManager and GridLayoutManager) are not tested.</p>
-     *
      * @param position Position to scroll.
      */
     public void scrollVerticallyToPosition(int position) {
