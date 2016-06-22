@@ -36,7 +36,6 @@ import java.util.List;
  * provided by the support library officially.
  */
 public class ObservableRecyclerView extends RecyclerView implements Scrollable {
-
     private static int recyclerViewLibraryVersion = 22;
 
     // Fields that should be saved onSaveInstanceState
@@ -119,6 +118,13 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
 
             View firstVisibleChild = getChildAt(0);
             if (firstVisibleChild != null) {
+                // Determine if the LayoutManager is reversing the layout
+                boolean reverseLayout = false;
+                LayoutManager manager = getLayoutManager();
+                if (manager instanceof LinearLayoutManager) {
+                    reverseLayout = ((LinearLayoutManager) manager).getReverseLayout();
+                }
+
                 if (mPrevFirstVisiblePosition < firstVisiblePosition) {
                     // scroll down
                     int skippedChildrenHeight = 0;
@@ -160,7 +166,8 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
                 if (mPrevFirstVisibleChildHeight < 0) {
                     mPrevFirstVisibleChildHeight = 0;
                 }
-                mScrollY = mPrevScrolledChildrenHeight - firstVisibleChild.getTop() + getPaddingTop();
+                mScrollY = reverseLayout ? mPrevScrolledChildrenHeight + firstVisibleChild.getBottom() - getBottom() + getPaddingBottom() :
+                    mPrevScrolledChildrenHeight - firstVisibleChild.getTop() + getPaddingTop();
                 mPrevFirstVisiblePosition = firstVisiblePosition;
 
                 dispatchOnScrollChanged(mScrollY, mFirstScroll, mDragging);
