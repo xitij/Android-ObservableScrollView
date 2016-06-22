@@ -1,15 +1,5 @@
 apply plugin: 'com.android.library'
 
-dependencies {
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    androidTestCompile ('com.android.support:appcompat-v7:23.1.1') {
-        exclude module: 'support-v4'
-    }
-    androidTestCompile ('com.nineoldandroids:library:2.4.0') {
-        exclude module: 'support-v4'
-    }
-}
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -34,6 +24,22 @@ android {
     lintOptions {
         abortOnError false
     }
+}
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    androidTestCompile ('com.android.support:appcompat-v7:23.1.1') {
+        exclude module: 'support-v4'
+    }
+    androidTestCompile ('com.nineoldandroids:library:2.4.0') {
+        exclude module: 'support-v4'
+    }
+}
+
+task javadoc(type: Javadoc) {
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
 // When testing on Travis CI,
