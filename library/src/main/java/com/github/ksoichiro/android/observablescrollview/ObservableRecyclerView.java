@@ -125,7 +125,7 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
                     reverseLayout = ((LinearLayoutManager) manager).getReverseLayout();
                 }
 
-                if (mPrevFirstVisiblePosition < firstVisiblePosition) {
+                if (mPrevFirstVisiblePosition < firstVisiblePosition && firstVisiblePosition > -1) {
                     // scroll down
                     int skippedChildrenHeight = 0;
                     if (firstVisiblePosition - mPrevFirstVisiblePosition != 1) {
@@ -142,7 +142,7 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
                     }
                     mPrevScrolledChildrenHeight += mPrevFirstVisibleChildHeight + skippedChildrenHeight;
                     mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
-                } else if (firstVisiblePosition < mPrevFirstVisiblePosition) {
+                } else if (firstVisiblePosition < mPrevFirstVisiblePosition && firstVisiblePosition > -1) {
                     // scroll up
                     int skippedChildrenHeight = 0;
                     if (mPrevFirstVisiblePosition - firstVisiblePosition != 1) {
