@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +37,7 @@ import java.util.List;
  * provided by the support library officially.
  */
 public class ObservableRecyclerView extends RecyclerView implements Scrollable {
+    private static final String TAG = ObservableRecyclerView.class.getSimpleName();
     private static int recyclerViewLibraryVersion = 22;
 
     // Fields that should be saved onSaveInstanceState
@@ -105,6 +107,9 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
         if (getChildCount() > 0) {
             int firstVisiblePosition = getChildAdapterPosition(getChildAt(0));
             int lastVisiblePosition = getChildAdapterPosition(getChildAt(getChildCount() - 1));
+            Log.d(TAG, "onScrollChanged() -- h: " + l + ", v: " + t + ", oldH: " + oldl + ", oldV: "+ oldt);
+            Log.d(TAG, "firstVisible: " + firstVisiblePosition + ", lastVisible: " + lastVisiblePosition +
+                ", prevFirstVisible: " + mPrevFirstVisiblePosition + ", mPrevScrolledChildrenHeight: " + mPrevScrolledChildrenHeight);
             for (int i = firstVisiblePosition, j = 0; i <= lastVisiblePosition; i++, j++) {
                 int childHeight = 0;
                 View child = getChildAt(j);
@@ -121,7 +126,7 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
                 // Determine if the LayoutManager is reversing the layout
                 boolean reverseLayout = false;
                 LayoutManager manager = getLayoutManager();
-                if (manager instanceof LinearLayoutManager) {
+                if (manager != null && manager instanceof LinearLayoutManager) {
                     reverseLayout = ((LinearLayoutManager) manager).getReverseLayout();
                 }
 
